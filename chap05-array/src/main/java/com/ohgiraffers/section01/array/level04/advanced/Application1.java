@@ -25,9 +25,9 @@ public class Application1 {
          }
 
          Arrays.sort(lotto);
-         for (int i = 0; i < lotto.length; i++) {
-            System.out.print(lotto[i] + " ");
-         }
+        for (int j : lotto) {
+            System.out.print(j + " ");
+        }
 	}
 	
 }

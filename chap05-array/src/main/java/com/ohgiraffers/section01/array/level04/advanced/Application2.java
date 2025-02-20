@@ -52,7 +52,8 @@ public class Application2 {
             System.out.println("4자리 숫자를 입력하세요 : ");
             String input = sc.nextLine();
             if (input.length() != 4) {
-                System.out.println("4자리의 정수를 입력해야 합니다.");                
+                System.out.println("4자리의 정수를 입력해야 합니다.");
+                continue;
             }
             int[] inputNum = new int[4];
             for (int i = 0; i < inputNum.length; i++) {
