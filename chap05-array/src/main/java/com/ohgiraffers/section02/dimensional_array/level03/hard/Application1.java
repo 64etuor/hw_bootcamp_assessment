@@ -27,7 +27,7 @@ public class Application1 {
 		* W S S J 
 		 * */
 
-		 Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		int numRangeMin = 1;
 		int numRangeMax = 10;
 		int rowCount = 0;
