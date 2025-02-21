@@ -34,13 +34,13 @@ public class StudentDTO {
     public int getMat() { return mat; }
     
     public String getInfomation() {
-        String info = "학년 : " + grade + ", "
-                   + "반 : " + classroom + ", "
-                   + "이름 : " + name + ", "
-                   + "국어 점수: " + kor + ", "
-                   + "영어 점수: " + eng + ", "
-                   + "수학 점수: " + mat + ", "
-                   + "평균 점수: " + (kor + eng + mat) / 3;
+        String info = "학년 : " + getGrade() + ", "
+                   + "반 : " + getClassroom() + ", "
+                   + "이름 : " + getName() + ", "
+                   + "국어 점수: " + getKor() + ", "
+                   + "영어 점수: " + getEng() + ", "
+                   + "수학 점수: " + getMat() + ", "
+                   + "평균 점수: " + (getKor() + getEng() + getMat()) / 3;
         System.out.println(info);
         return info;
     }

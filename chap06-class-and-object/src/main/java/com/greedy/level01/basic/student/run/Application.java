@@ -19,7 +19,7 @@ public class Application{
         int count = 0;
         boolean isContinue = true;
         
-        while(isContinue){
+        while(isContinue && count < 10){
             System.out.println("학년 : ");
             int grade = scanner.nextInt();
 
@@ -38,7 +38,14 @@ public class Application{
             System.out.println("수학 : ");
             int mat = scanner.nextInt();
             
-            StudentDTO student = new StudentDTO(grade, classroom, name, kor, eng, mat);
+            StudentDTO student = new StudentDTO();
+            student.setGrade(grade);
+            student.setClassroom(classroom);
+            student.setName(name);
+            student.setKor(kor);
+            student.setEng(eng);
+            student.setMat(mat);
+            
             students[count] = student;
             count++;
 
