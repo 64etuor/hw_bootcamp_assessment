@@ -20,35 +20,36 @@ public class Application{
         boolean isContinue = true;
         
         while(isContinue && count < 10){
-            System.out.println("학년 : ");
-            int grade = scanner.nextInt();
-
-            System.out.println("반 : ");
-            int classroom = scanner.nextInt();
-
-            System.out.println("이름 : ");
-            String name = scanner.next();
-
-            System.out.println("국어 : ");
-            int kor = scanner.nextInt();
-
-            System.out.println("영어 : ");
-            int eng = scanner.nextInt();
-
-            System.out.println("수학 : ");
-            int mat = scanner.nextInt();
-            
             StudentDTO student = new StudentDTO();
-            student.setGrade(grade);
-            student.setClassroom(classroom);
-            student.setName(name);
-            student.setKor(kor);
-            student.setEng(eng);
-            student.setMat(mat);
             
-            students[count] = student;
-            count++;
+            try {
+                System.out.println("학년 : ");
+                student.setGrade(scanner.nextInt());
 
+                System.out.println("반 : ");
+                student.setClassroom(scanner.nextInt());
+
+                System.out.println("이름 : ");
+                student.setName(scanner.next());
+
+                System.out.println("국어 : ");
+                student.setKor(scanner.nextInt());
+
+                System.out.println("영어 : ");
+                student.setEng(scanner.nextInt());
+
+                System.out.println("수학 : ");
+                student.setMat(scanner.nextInt());
+                
+                students[count] = student;
+                count++;
+                
+            } catch (IllegalArgumentException e) {
+                System.out.println("오류: " + e.getMessage());
+                System.out.println("다시 입력해주세요.");
+                continue;
+            }
+            
             System.out.println("계속 추가 하시겠습니까? (y/n)");
             while(isContinue = true) {
                 String answer = scanner.next();
