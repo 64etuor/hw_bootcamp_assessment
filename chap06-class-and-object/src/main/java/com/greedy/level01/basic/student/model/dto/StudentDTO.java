@@ -19,12 +19,47 @@ public class StudentDTO {
         this.mat = mat;
     }
     
-    public void setGrade(int grade) { this.grade = grade; }
-    public void setClassroom(int classroom) { this.classroom = classroom; }
+    public void setGrade(int grade) { 
+        if (grade >= 1 && grade <= 6) {
+            this.grade = grade;
+        } else {
+            throw new IllegalArgumentException("학년은 1~6학년까지만 입력 가능합니다.");
+        }
+    }
+    
+    public void setClassroom(int classroom) { 
+        if (classroom >= 1 && classroom <= 10) {
+            this.classroom = classroom;
+        } else {
+            throw new IllegalArgumentException("반은 1~10반까지만 입력 가능합니다.");
+        }
+    }
+    
     public void setName(String name) { this.name = name; }
-    public void setKor(int kor) { this.kor = kor; }
-    public void setEng(int eng) { this.eng = eng; }
-    public void setMat(int mat) { this.mat = mat; }
+    
+    public void setKor(int kor) { 
+        if (kor >= 0 && kor <= 100) {
+            this.kor = kor;
+        } else {
+            throw new IllegalArgumentException("점수는 0~100점까지만 입력 가능합니다.");
+        }
+    }
+    
+    public void setEng(int eng) { 
+        if (eng >= 0 && eng <= 100) {
+            this.eng = eng;
+        } else {
+            throw new IllegalArgumentException("점수는 0~100점까지만 입력 가능합니다.");
+        }
+    }
+    
+    public void setMat(int mat) { 
+        if (mat >= 0 && mat <= 100) {
+            this.mat = mat;
+        } else {
+            throw new IllegalArgumentException("점수는 0~100점까지만 입력 가능합니다.");
+        }
+    }
     
     public int getGrade() { return grade; }
     public int getClassroom() { return classroom; }
