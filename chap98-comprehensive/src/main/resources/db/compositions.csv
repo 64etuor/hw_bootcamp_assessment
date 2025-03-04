@@ -1,0 +1,8 @@
+ID,Created At,Original Text,Writing Style,Feedback,Improved Text,Score,Model,Temperature
+7a0ee080-03c7-4a88-8853-97fb11b593c4,Wed Mar 05 02:29:07 KST 2025,"1. I'm going to have dinner with my family this evening.
+2. Yesterady my mom cooked a dish and I ate it well.
+3. I'm going to watch a movie with my friends this weekend. I'm so excited!",NORMAL,"1. The first sentence is grammatically correct and natural. No changes needed.
+2. The second sentence has a minor spelling error ('Yesterady' should be 'Yesterday'). Additionally, 'ate it well' is not a natural expression in English. 'Enjoyed it' is more appropriate and natural.
+3. The third sentence is mostly natural, but 'so excited' can be slightly improved to 'really excited' for better emphasis and naturalness. Overall, the sentences are clear and convey the intended meaning effectively.","1. I'm going to have dinner with my family this evening.
+2. Yesterday, my mom cooked a dish, and I enjoyed it.
+3. I'm going to watch a movie with my friends this weekend. I'm really excited!",85,deepseek-chat,0.70
