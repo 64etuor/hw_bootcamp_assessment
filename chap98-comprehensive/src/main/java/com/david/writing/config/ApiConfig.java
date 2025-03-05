@@ -17,7 +17,7 @@ public class ApiConfig {
         this.apiKey = apiKey;
         this.apiUrl = "https://api.deepseek.com/v1/chat/completions";
         this.temperature = 0.7;
-        this.maxTokens = 200;
+        this.maxTokens = 600;
         this.model = "deepseek-chat";
     }
 
@@ -42,6 +42,13 @@ public class ApiConfig {
 
     public int getMaxTokens() {
         return maxTokens;
+    }
+
+    public void setMaxTokens(int maxTokens) {
+        if (maxTokens < 100 || maxTokens > 2000) {
+            throw new IllegalArgumentException("Max tokens must be between 100 and 2000");
+        }
+        this.maxTokens = maxTokens;
     }
 
     public String getModel() {

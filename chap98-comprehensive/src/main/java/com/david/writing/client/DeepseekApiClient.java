@@ -51,6 +51,10 @@ public class DeepseekApiClient {
             }
 
             String responseBody = response.body().string();
+            // System.out.println("\n==== API RESPONSE RAW ====");
+            // System.out.println(responseBody);
+            // System.out.println("==== END API RESPONSE RAW ====\n");
+            
             JSONObject jsonResponse = new JSONObject(responseBody);
             
             if (jsonResponse.has("usage")) {

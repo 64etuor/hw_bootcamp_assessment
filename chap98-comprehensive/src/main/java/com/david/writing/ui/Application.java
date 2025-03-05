@@ -1,6 +1,7 @@
 package com.david.writing.ui;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.david.writing.config.EnvConfig;
@@ -32,7 +33,7 @@ public class Application {
     private static void showMenu() {
         while (true) {
             try {
-                System.out.println("\n=== Writing Practice Program ===");
+                System.out.println("\n=== Practice makes perfect ===");
                 System.out.println("1. Writing Practice");
                 System.out.println("2. View Learning History");
                 System.out.println("3. View API Usage");
@@ -124,9 +125,23 @@ public class Application {
                     text.append(line).append("\n");
                 }
 
-                if (text.length() == 0) {
-                    System.out.println("No translation was entered.");
+                if (text.length() < 20 ) {
+                    System.out.println("Translation is too short.");
                     continue;
+                }
+
+                System.out.println("\nEvaluating your translation...");
+                System.out.println("Some vocabulary hints from the original sentences:");
+
+                // 어휘 힌트 하나씩 표시
+                List<Map<String, String>> vocabulary = compositionService.getLastVocabulary();
+                for (Map<String, String> vocabItem : vocabulary) {
+                    System.out.printf("- %s: %s\n", vocabItem.get("word"), vocabItem.get("meaning"));
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        // 무시
+                    }
                 }
 
                 Composition result = compositionService.evaluateComposition(text.toString().trim(), selectedStyle);

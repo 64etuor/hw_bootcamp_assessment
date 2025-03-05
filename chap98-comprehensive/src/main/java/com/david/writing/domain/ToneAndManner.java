@@ -1,10 +1,10 @@
 package com.david.writing.domain;
 
 public enum ToneAndManner {
-    NORMAL("일반적인 어조"),
-    BUSINESS("비즈니스적인 어조"),
-    PLAYFUL("장난스러운 어조"),
-    ROMANTIC("로맨틱한 어조");
+    NORMAL("Normal English"),
+    BUSINESS("Business English"),
+    PLAYFUL("Playful English"),
+    ROMANTIC("Romantic English");
 
     private final String description;
 

@@ -1,8 +1,6 @@
 ID,Created At,Original Text,Writing Style,Feedback,Improved Text,Score,Model,Temperature
-7a0ee080-03c7-4a88-8853-97fb11b593c4,Wed Mar 05 02:29:07 KST 2025,"1. I'm going to have dinner with my family this evening.
-2. Yesterady my mom cooked a dish and I ate it well.
-3. I'm going to watch a movie with my friends this weekend. I'm so excited!",NORMAL,"1. The first sentence is grammatically correct and natural. No changes needed.
-2. The second sentence has a minor spelling error ('Yesterady' should be 'Yesterday'). Additionally, 'ate it well' is not a natural expression in English. 'Enjoyed it' is more appropriate and natural.
-3. The third sentence is mostly natural, but 'so excited' can be slightly improved to 'really excited' for better emphasis and naturalness. Overall, the sentences are clear and convey the intended meaning effectively.","1. I'm going to have dinner with my family this evening.
-2. Yesterday, my mom cooked a dish, and I enjoyed it.
-3. I'm going to watch a movie with my friends this weekend. I'm really excited!",85,deepseek-chat,0.70
+b7d2f994-7d95-4928-b5ae-549a8889c825,Wed Mar 05 15:00:05 KST 2025,"1. Please make a meeting minute for summary and share it with related team members.
+2. Hand over the report which describe the progress of the project until tomorrow 10am.
+3. Additionally, if you need more references, feel free to ask anytime.",BUSINESS,"Grammar and vocabulary are mostly accurate, but some phrases are unnatural or awkward (e.g., 'make a meeting minute,' 'hand over the report'). Improved for clarity and professionalism.","1. Please summarize the meeting minutes and share them with the relevant team members. 
+2. Submit a report updating the project's progress by 10 AM tomorrow. 
+3. If additional materials are needed, please do not hesitate to request them at any time.",75,deepseek-chat,1.30
