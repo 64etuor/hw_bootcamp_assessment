@@ -107,14 +107,16 @@ public class DeepseekChatStrategy implements AIService {
                - Create unexpected and creative combinations of subjects
                - Use modern and relevant contexts
             
-            Also provide 8 key vocabulary words that are actually used in the sentences.
+            Also provide 16 key vocabulary words that are actually used in the sentences or are closely related to the context.
+            Include a mix of nouns, verbs, adjectives, and adverbs.
             
             Your response must be a valid JSON object with exactly these fields:
             {
                 "sentences": ["한국어 문장1", "한국어 문장2", "한국어 문장3"],
                 "keywords": [
                     {"word": "한국어 단어1", "meaning": "English meaning 1"},
-                    {"word": "한국어 단어2", "meaning": "English meaning 2"}
+                    {"word": "한국어 단어2", "meaning": "English meaning 2"},
+                    ... (16 keywords total)
                 ]
             }
             """, category);

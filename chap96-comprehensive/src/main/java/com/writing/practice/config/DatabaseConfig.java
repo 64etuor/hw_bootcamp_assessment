@@ -1,16 +1,23 @@
 package com.writing.practice.config;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConfig {
-    private static final String DB_URL = "jdbc:sqlite:writing_practice.db";
+    private static final String DB_DIR = "src/main/java/com/writing/practice/db";
+    private static final String DB_FILE = "writing_practice.db";
+    private static final String DB_URL = "jdbc:sqlite:" + DB_DIR + File.separator + DB_FILE;
     private static Connection connection;
 
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
+            File dbDir = new File(DB_DIR);
+            if (!dbDir.exists()) {
+                dbDir.mkdirs();
+            }
             connection = DriverManager.getConnection(DB_URL);
         }
         return connection;
@@ -20,7 +27,6 @@ public class DatabaseConfig {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
             
-            // 작문 테이블 생성
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS compositions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,7 +42,6 @@ public class DatabaseConfig {
                 )
             """);
 
-            // API 사용 정보 테이블 생성
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS api_usage (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,

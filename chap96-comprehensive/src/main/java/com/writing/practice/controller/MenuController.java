@@ -21,6 +21,16 @@ public class MenuController {
     private final APIUsageRepository apiUsageRepository;
     private final Scanner scanner;
 
+    // ANSI 색상 코드
+    private static final String RESET = "\u001B[0m";
+    private static final String BOLD = "\u001B[1m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String BLUE = "\u001B[34m";
+    private static final String PURPLE = "\u001B[35m";
+    private static final String RED = "\u001B[31m";
+
     public MenuController(AIService aiService) {
         try {
             new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start().waitFor();
@@ -57,34 +67,82 @@ public class MenuController {
     }
 
     private void displayMenu() {
-        System.out.println("""
-            
-            ===== Composition - Practice makes perfect =====
-            1. Writing Practice
-            2. View API Usage
-            3. Weakness Analysis(Last 1 month)
-            4. Set Temperature (Current: %.1f)
-            5. Set AI Model (Current: %s)
-            6. Set Max Token (Current: %d)
-            0. Exit
-            선택하세요: """.formatted(
-                aiService.getCurrentTemperature(),
-                aiService.getCurrentModel(),
-                aiService.getCurrentMaxTokens()
-            ));
+        String logo = """
+            %s
+            ╔═══════════════════════════════════════════════════════════════╗
+            ║  %s  Writing Practice Pro  %s                                     ║
+            ║  %s  Practice Makes Perfect!  %s                                  ║
+            ╚═══════════════════════════════════════════════════════════════╝
+            %s""".formatted(CYAN, YELLOW + BOLD, CYAN, GREEN + BOLD, CYAN, RESET);
+
+        String tempStr = String.format("%.1f", aiService.getCurrentTemperature());
+        String modelStr = aiService.getCurrentModel();
+        String tokenStr = String.format("%d", aiService.getCurrentMaxTokens());
+        
+        tempStr = String.format("%-5s", tempStr);
+        modelStr = String.format("%-15s", modelStr);
+        tokenStr = String.format("%-6s", tokenStr);
+
+        String menu = """
+            %s┌─────────────────────── Menu Options ──────────────────────────┐%s
+                                                                         
+               %s1.%s Writing Practice                   
+               %s2.%s View API Usage                    
+               %s3.%s Weakness Analysis           Last 30 days    
+               %s4.%s Set Temperature             Current Temp: %s%s                       
+               %s5.%s Set AI Model                Current Model: %s%s                     
+               %s6.%s Set Max Token               Max Tokens: %s%s                      
+               %s0.%s Exit                                                 
+                                                                          
+            └───────────────────────────────────────────────────────────────┘
+            %s선택하세요: """.formatted(
+                BLUE, RESET,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET, CYAN + tempStr, RESET,
+                YELLOW + BOLD, RESET, CYAN + modelStr, RESET,
+                YELLOW + BOLD, RESET, CYAN + tokenStr, RESET,
+                RED + BOLD, RESET,
+                GREEN + BOLD
+            );
+
+        System.out.println(logo);
+        System.out.print(menu);
+    }
+
+    private void displayCategoryMenu() {
+        String categoryMenu = """
+            %s
+            ┌──────────────────── Select Category ────────────────────┐
+            │                                                         │
+            │    %s1.%s Normal    - Daily life, hobbies, weather          │
+            │    %s2.%s Business  - Office work, meetings, negotiations   │
+            │    %s3.%s Romantic  - Relationships, feelings, expressions  │
+            │    %s4.%s Playful   - Jokes, humor, casual conversations    │
+            │    %s0.%s Back to Main Menu                                 │
+            │                                                         │
+            └─────────────────────────────────────────────────────────┘
+            %s선택: """.formatted(
+                BLUE,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET,
+                YELLOW + BOLD, RESET,
+                RED + BOLD, RESET,
+                GREEN + BOLD
+            );
+        
+        System.out.print(categoryMenu);
     }
 
     private void writingPractice() {
-        System.out.println("""
-            카테고리를 선택하세요:
-            1. Normal
-            2. Business
-            3. Romantic
-            4. Playful
-            선택: """);
+        displayCategoryMenu();
         
         int categoryChoice = scanner.nextInt();
         scanner.nextLine();
+        
+        if (categoryChoice == 0) return;
         
         String category = switch (categoryChoice) {
             case 1 -> "Normal";
@@ -92,7 +150,7 @@ public class MenuController {
             case 3 -> "Romantic";
             case 4 -> "Playful";
             default -> {
-                System.out.println("잘못된 선택입니다.");
+                System.out.println(RED + "잘못된 선택입니다." + RESET);
                 yield null;
             }
         };
@@ -108,20 +166,22 @@ public class MenuController {
                     for (Composition comp : recentCompositions.stream().limit(3).toList()) {
                         System.out.printf("""
                             
-                            작성일: %s
-                            한국어: %s
-                            번역: %s
-                            이상적인 번역: %s
-                            점수: %.1f
+                            %s=== 복습 문장 ===%s
+                            작성일: %s%s%s
+                            한국어: %s%s%s
+                            번역: %s%s%s
+                            이상적인 번역: %s%s%s
+                            점수: %s%.1f%s
                             
                             """,
-                            comp.getCreatedAt(),
-                            comp.getKoreanSentence(),
-                            comp.getUserSentence(),
-                            comp.getIdealSentence(),
-                            comp.getCompositionScore()
+                            YELLOW + BOLD, RESET,
+                            RESET, comp.getCreatedAt(), RESET,
+                            RESET, comp.getKoreanSentence(), RESET,
+                            RESET, comp.getUserSentence(), RESET,
+                            GREEN, comp.getIdealSentence(), RESET,
+                            CYAN, comp.getCompositionScore(), RESET
                         );
-                        Thread.sleep(5000); // 5초 대기
+                        Thread.sleep(8000); // 8초로 증가
                     }
                 } catch (InterruptedException e) {
                 }
@@ -153,6 +213,7 @@ public class MenuController {
             
             Thread feedbackThread = new Thread(() -> {
                 try {
+                    System.out.print("\r⠋ 피드백 분석 중...");
                     // 모든 문장에 대한 피드백을 한 번에 요청
                     List<FeedbackResponse> feedbacks = new ArrayList<>();
                     for (int i = 0; i < sentences.size(); i++) {
@@ -167,19 +228,19 @@ public class MenuController {
                         System.out.printf("""
                             
                             === %d번 문장 ===
-                            원문: %s
-                            번역: %s
-                            이상적인 번역: %s
+                            원문: %s%s%s
+                            번역: %s%s%s
+                            이상적인 번역: %s%s%s
                             점수: %.1f
                             피드백:
-                            %s
+                            %s%s%s
                             """,
                             i + 1,
-                            sentences.get(i),
-                            translations.get(i),
-                            feedback.idealSentence(),
+                            RESET, sentences.get(i), RESET,
+                            RESET, translations.get(i), RESET,
+                            GREEN, feedback.idealSentence(), RESET,
                             feedback.score(),
-                            formatFeedback(feedback.feedback())
+                            GREEN, formatFeedback(feedback.feedback()), RESET
                         );
                         
                         // 결과 저장
@@ -207,11 +268,14 @@ public class MenuController {
             });
             feedbackThread.start();
 
+            System.out.println("\n=== 오늘의 핵심 단어 ===");
             for (Map<String, String> keyword : keywords) {
                 keyword.forEach((word, meaning) -> {
                     try {
                         Thread.sleep(1000);
-                        System.out.printf("\n%s: %s", word, meaning);
+                        System.out.printf("\n%s%s%s: %s%s%s", 
+                            YELLOW + BOLD, word, RESET,
+                            CYAN, meaning, RESET);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
