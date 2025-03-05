@@ -29,7 +29,6 @@ public class Composition {
         this.temperature = temperature;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public LocalDateTime getCreatedAt() { return createdAt; }

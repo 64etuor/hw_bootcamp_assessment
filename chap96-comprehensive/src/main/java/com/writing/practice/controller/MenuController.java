@@ -163,7 +163,7 @@ public class MenuController {
             
             Thread reviewThread = new Thread(() -> {
                 try {
-                    for (Composition comp : recentCompositions.stream().limit(3).toList()) {
+                    for (Composition comp : recentCompositions.stream().limit(3).toList()) { // marker : 복습 문장 maxSize config로 분리할 수도?
                         System.out.printf("""
                             
                             %s=== 복습 문장 ===%s
@@ -181,7 +181,7 @@ public class MenuController {
                             GREEN, comp.getIdealSentence(), RESET,
                             CYAN, comp.getCompositionScore(), RESET
                         );
-                        Thread.sleep(8000); // 8초로 증가
+                        Thread.sleep(8000); // marker : config로 분리할 수도?
                     }
                 } catch (InterruptedException e) {
                 }
@@ -214,7 +214,6 @@ public class MenuController {
             Thread feedbackThread = new Thread(() -> {
                 try {
                     System.out.print("\r⠋ 피드백 분석 중...");
-                    // 모든 문장에 대한 피드백을 한 번에 요청
                     List<FeedbackResponse> feedbacks = new ArrayList<>();
                     for (int i = 0; i < sentences.size(); i++) {
                         feedbacks.add(aiService.getFeedback(sentences.get(i), translations.get(i)));
@@ -256,7 +255,6 @@ public class MenuController {
                         );
                         compositionRepository.save(composition);
 
-                        // 다음 피드백으로 넘어가기 전에 사용자 입력 대기
                         if (i < sentences.size() - 1) {
                             System.out.println("\n다음 피드백을 보려면 Enter 키를 누르세요...");
                             scanner.nextLine();
@@ -272,7 +270,7 @@ public class MenuController {
             for (Map<String, String> keyword : keywords) {
                 keyword.forEach((word, meaning) -> {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000); // marker : config로 분리할 수도??
                         System.out.printf("\n%s%s%s: %s%s%s", 
                             YELLOW + BOLD, word, RESET,
                             CYAN, meaning, RESET);
@@ -301,7 +299,7 @@ public class MenuController {
             printUsageStats(30);
             
             System.out.println("\n[전체 통계]");
-            printUsageStats(36500); // 약 100년치
+            printUsageStats(36500); // marker : config로 분리할 수도??
             
             System.out.println("\n메인 메뉴로 돌아가려면 Enter 키를 누르세요...");
             scanner.nextLine();
@@ -430,6 +428,6 @@ public class MenuController {
             lineLength += word.length() + 1;
         }
         
-        return formatted.toString().trim().replaceAll("\n", "\n    "); // 들여쓰기 추가
+        return formatted.toString().trim().replaceAll("\n", "\n    ");
     }
 } 

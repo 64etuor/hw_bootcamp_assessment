@@ -174,7 +174,8 @@ public class DeepseekChatStrategy implements AIService {
     @Override
     public WeaknessAnalysisResponse analyzeWeakness(List<String> recentCompositions) {
         String prompt = String.format("""
-            Analyze these recent English translations and respond in this exact JSON format:
+            Analyze these recent English translations and respond in this exact JSON format,
+            Weaknesses and suggestions should be specific :
             {
                 "weaknesses": ["weakness1", "weakness2", ...],
                 "improvements": ["suggestion1", "suggestion2", ...]
