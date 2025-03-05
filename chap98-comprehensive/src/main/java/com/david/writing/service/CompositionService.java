@@ -43,37 +43,33 @@ public class CompositionService {
         switch (selectedTone) {
             case BUSINESS:
                 prompt = """
-                    Please create three connected Korean sentences that could occur in a business/workplace situation.
+                    Please create random three connected Korean sentences that could occur in a business/workplace situation.
                     The sentences should flow naturally and use a professional and formal tone in Korean.
                     Please number each sentence with 1., 2., 3.
-                    Example topics: meeting preparation, project deadlines, team collaboration, business meetings, etc.
                     Respond in Korean only.
                     """;
                 break;
             case NORMAL:
                 prompt = """
-                    Please create three connected Korean sentences that could occur in daily life.
+                    Please create random three connected Korean sentences that could occur in daily life.
                     The sentences should flow naturally and use a casual, everyday tone in Korean.
                     Please number each sentence with 1., 2., 3.
-                    Example topics: family time, hobbies, meeting friends, daily activities, etc.
                     Respond in Korean only.
                     """;
                 break;
             case ROMANTIC:
                 prompt = """
-                    Please create three connected Korean sentences that could occur in a romantic situation.
+                    Please create random three connected Korean sentences that could occur in a romantic situation.
                     The sentences should flow naturally and use an emotional and warm tone in Korean.
                     Please number each sentence with 1., 2., 3.
-                    Example topics: first date, proposal, anniversary celebration, romantic moments, etc.
                     Respond in Korean only.
                     """;
                 break;
             case PLAYFUL:
                 prompt = """
-                    Please create three connected Korean sentences about a fun and lighthearted situation.
+                    Please create random three connected Korean sentences about a fun and lighthearted situation.
                     The sentences should flow naturally and use a bright and humorous tone in Korean.
                     Please number each sentence with 1., 2., 3.
-                    Example topics: funny mistakes, enjoyable games, amusing episodes, etc.
                     Respond in Korean only.
                     """;
                 break;
