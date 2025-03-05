@@ -1,0 +1,6 @@
+ID,Created At,Original Text,Writing Style,Feedback,Improved Text,Score,Model,Temperature
+b7d2f994-7d95-4928-b5ae-549a8889c825,Wed Mar 05 15:00:05 KST 2025,"1. Please make a meeting minute for summary and share it with related team members.
+2. Hand over the report which describe the progress of the project until tomorrow 10am.
+3. Additionally, if you need more references, feel free to ask anytime.",BUSINESS,"Grammar and vocabulary are mostly accurate, but some phrases are unnatural or awkward (e.g., 'make a meeting minute,' 'hand over the report'). Improved for clarity and professionalism.","1. Please summarize the meeting minutes and share them with the relevant team members. 
+2. Submit a report updating the project's progress by 10 AM tomorrow. 
+3. If additional materials are needed, please do not hesitate to request them at any time.",75,deepseek-chat,1.30
