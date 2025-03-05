@@ -1,0 +1,12 @@
+abcded
+BufferedReader
+text1 txt file
+1
+2
+3
+45676
+test2 txt file
+ahahahahe8f
+123
+34
+5

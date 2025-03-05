@@ -1,0 +1,7 @@
+abcded
+BufferedReader
+text1 txt file
+1
+2
+3
+45676
