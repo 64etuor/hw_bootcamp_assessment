@@ -22,7 +22,6 @@ public class MenuController {
     private final Scanner scanner;
 
     public MenuController(AIService aiService) {
-        // Windows 콘솔에서 한글 출력을 위한 설정
         try {
             new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start().waitFor();
         } catch (Exception e) {
@@ -39,7 +38,7 @@ public class MenuController {
         while (true) {
             displayMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // 버퍼 비우기
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> writingPractice();
@@ -60,10 +59,10 @@ public class MenuController {
     private void displayMenu() {
         System.out.println("""
             
-            ===== Writing Practice Menu =====
+            ===== Composition - Practice makes perfect =====
             1. Writing Practice
             2. View API Usage
-            3. Weakness Analysis
+            3. Weakness Analysis(Last 1 month)
             4. Set Temperature (Current: %.1f)
             5. Set AI Model (Current: %s)
             6. Set Max Token (Current: %d)
@@ -85,7 +84,7 @@ public class MenuController {
             선택: """);
         
         int categoryChoice = scanner.nextInt();
-        scanner.nextLine(); // 버퍼 비우기
+        scanner.nextLine();
         
         String category = switch (categoryChoice) {
             case 1 -> "Normal";
@@ -101,11 +100,9 @@ public class MenuController {
         if (category == null) return;
 
         try {
-            // 최근 작문 기록 출력
             System.out.println("\n=== 복습: 최근 작문 기록 ===");
             List<Composition> recentCompositions = compositionRepository.findRecentCompositions(30);
             
-            // 복습 내용을 출력할 스레드 생성
             Thread reviewThread = new Thread(() -> {
                 try {
                     for (Composition comp : recentCompositions.stream().limit(3).toList()) {
@@ -114,35 +111,31 @@ public class MenuController {
                             작성일: %s
                             한국어: %s
                             번역: %s
+                            이상적인 번역: %s
                             점수: %.1f
-                            피드백: %s
                             
                             """,
                             comp.getCreatedAt(),
                             comp.getKoreanSentence(),
                             comp.getUserSentence(),
-                            comp.getCompositionScore(),
-                            comp.getFeedback()
+                            comp.getIdealSentence(),
+                            comp.getCompositionScore()
                         );
                         Thread.sleep(5000); // 5초 대기
                     }
                 } catch (InterruptedException e) {
-                    // 스레드가 중단되면 조용히 종료
                 }
             });
             reviewThread.start();
 
-            // 랜덤 문장과 핵심 단어 가져오기
             System.out.println("새로운 문장을 가져오는 중입니다...");
             SentenceResponse response = aiService.getRandomSentences(category);
             
-            // 복습 출력 중단
             reviewThread.interrupt();
             
             List<String> sentences = response.sentences();
             List<Map<String, String>> keywords = response.keywords();
 
-            // 문장 제시 및 사용자 입력
             System.out.println("\n=== 오늘의 번역 과제 ===");
             for (int i = 0; i < sentences.size(); i++) {
                 System.out.printf("%d. %s%n", i + 1, sentences.get(i));
@@ -156,10 +149,8 @@ public class MenuController {
                 translations.add(scanner.nextLine());
             }
 
-            // 피드백 요청 시작과 동시에 핵심 단어 출력 시작
             System.out.println("\n피드백을 요청하는 동안 오늘의 핵심 단어를 복습해보세요!");
             
-            // 피드백 요청을 별도 스레드로 처리
             Thread feedbackThread = new Thread(() -> {
                 try {
                     // 모든 문장에 대한 피드백을 한 번에 요청
@@ -168,7 +159,7 @@ public class MenuController {
                         feedbacks.add(aiService.getFeedback(sentences.get(i), translations.get(i)));
                     }
                     
-                    // 피드백 결과 출력 및 저장
+                    // 피드백 결과를 하나씩 출력
                     System.out.println("\n=== 피드백 결과 ===");
                     for (int i = 0; i < sentences.size(); i++) {
                         FeedbackResponse feedback = feedbacks.get(i);
@@ -182,7 +173,6 @@ public class MenuController {
                             점수: %.1f
                             피드백:
                             %s
-                            
                             """,
                             i + 1,
                             sentences.get(i),
@@ -204,6 +194,12 @@ public class MenuController {
                             aiService.getCurrentTemperature()
                         );
                         compositionRepository.save(composition);
+
+                        // 다음 피드백으로 넘어가기 전에 사용자 입력 대기
+                        if (i < sentences.size() - 1) {
+                            System.out.println("\n다음 피드백을 보려면 Enter 키를 누르세요...");
+                            scanner.nextLine();
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println("\n피드백 처리 중 오류가 발생했습니다: " + e.getMessage());
@@ -211,7 +207,6 @@ public class MenuController {
             });
             feedbackThread.start();
 
-            // 핵심 단어 출력
             for (Map<String, String> keyword : keywords) {
                 keyword.forEach((word, meaning) -> {
                     try {
@@ -223,10 +218,8 @@ public class MenuController {
                 });
             }
 
-            // 피드백 스레드가 완료될 때까지 대기
             feedbackThread.join();
 
-            // 사용자가 Enter 키를 누를 때까지 대기
             System.out.println("\n\n메인 메뉴로 돌아가려면 Enter 키를 누르세요...");
             scanner.nextLine();
 
@@ -240,15 +233,12 @@ public class MenuController {
         try {
             System.out.println("\n=== API 사용량 통계 ===");
             
-            // 최근 30일 통계
             System.out.println("\n[최근 30일 통계]");
             printUsageStats(30);
             
-            // 전체 통계
             System.out.println("\n[전체 통계]");
             printUsageStats(36500); // 약 100년치
             
-            // 사용자가 Enter 키를 누를 때까지 대기
             System.out.println("\n메인 메뉴로 돌아가려면 Enter 키를 누르세요...");
             scanner.nextLine();
             
@@ -291,7 +281,6 @@ public class MenuController {
 
             System.out.println("\n약점을 분석하는 중입니다. 잠시만 기다려주세요...");
             
-            // 분석 요청을 별도 스레드로 처리
             Thread analysisThread = new Thread(() -> {
                 try {
                     WeaknessAnalysisResponse analysis = aiService.analyzeWeakness(recentSentences);
@@ -308,7 +297,6 @@ public class MenuController {
             });
             analysisThread.start();
 
-            // 로딩 애니메이션 표시
             String[] frames = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
             int frameIndex = 0;
             while (analysisThread.isAlive()) {
@@ -318,10 +306,8 @@ public class MenuController {
             }
             System.out.println();
 
-            // 분석 스레드가 완료될 때까지 대기
             analysisThread.join();
 
-            // 사용자가 Enter 키를 누를 때까지 대기
             System.out.println("\n메인 메뉴로 돌아가려면 Enter 키를 누르세요...");
             scanner.nextLine();
 
@@ -366,15 +352,13 @@ public class MenuController {
         }
     }
 
-    // 피드백 텍스트 포맷팅을 위한 헬퍼 메소드
     private String formatFeedback(String feedback) {
-        // 약 50자마다 줄바꿈 추가
         StringBuilder formatted = new StringBuilder();
         String[] words = feedback.split(" ");
         int lineLength = 0;
         
         for (String word : words) {
-            if (lineLength + word.length() > 50) {
+            if (lineLength + word.length() > 70) {
                 formatted.append("\n");
                 lineLength = 0;
             }

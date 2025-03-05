@@ -93,18 +93,19 @@ public class DeepseekChatStrategy implements AIService {
     @Override
     public SentenceResponse getRandomSentences(String category) {
         String prompt = String.format("""
-            You are a Korean language teacher. Generate 3 random Korean sentences (intermediate level) in the %s category.
+            You are a Korean language teacher. Generate 3 interesting and diverse Korean sentences (intermediate level).
+            Do not include English translations in the sentences.
             
             Requirements for sentences:
             1. Each sentence should have different grammar patterns and vocabulary level
-            2. Include both casual and formal expressions
-            3. Mix different tenses (past, present, future)
-            4. Use diverse sentence structures (simple, compound, complex)
-            5. For each category, focus on:
-               - Normal: daily life, hobbies, weather, family
-               - Business: office work, meetings, emails, negotiations
-               - Romantic: relationships, feelings, dates, expressions of love
-               - Playful: jokes, humor, informal expressions, internet slang
+            2. Mix both casual and formal expressions naturally
+            3. Use diverse tenses and sentence structures
+            4. Make the content interesting and engaging
+            5. Category inspiration (but not limited to):
+               - %s category can include any topics that fit the mood
+               - Feel free to mix topics like technology, culture, arts, science, current trends
+               - Create unexpected and creative combinations of subjects
+               - Use modern and relevant contexts
             
             Also provide 8 key vocabulary words that are actually used in the sentences.
             
