@@ -32,11 +32,6 @@ public class MenuController {
     private static final String RED = "\u001B[31m";
 
     public MenuController(AIService aiService) {
-        try {
-            new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            System.err.println("콘솔 인코딩 설정 실패: " + e.getMessage());
-        }
 
         this.aiService = aiService;
         this.compositionRepository = new CompositionRepository();
